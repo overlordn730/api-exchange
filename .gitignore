@@ -1,0 +1,15 @@
+# Build
+**/bin/
+**/obj/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# Configuración local sensible
+**/appsettings.Development.json
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
