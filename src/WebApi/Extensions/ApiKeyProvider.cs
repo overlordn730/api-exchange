@@ -14,13 +14,15 @@ public class ApiKeyProvider(
 
     public Task<IApiKey?> ProvideAsync(string key)
     {
+        _logger.LogInformation("ApiKey recibido: [{key}]", key);
+
         if (key.Equals(_apiKey))
         {
             _logger.LogDebug("ApiKey válido");
             return Task.FromResult<IApiKey?>(new ApiKeyResult(key));
         }
 
-        _logger.LogWarning("ApiKey inválido");
+        _logger.LogWarning("ApiKey inválido: [{key}]", key);
         return Task.FromResult<IApiKey?>(null);
     }
 }

@@ -52,6 +52,14 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors();
+app.Use(async (context, next) =>
+{
+    foreach (var header in context.Request.Headers)
+    {
+        Console.WriteLine($"Header: {header.Key} = {header.Value}");
+    }
+    await next();
+});
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseHttpsRedirection();

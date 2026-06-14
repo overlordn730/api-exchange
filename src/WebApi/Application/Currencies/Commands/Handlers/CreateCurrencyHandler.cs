@@ -22,7 +22,9 @@ public class CreateCurrencyHandler(
         {
             Code = request.Code,
             Name = request.Name,
-            RateToBase = request.RateToBase
-        });
+            CountryCode = request.CountryCode,
+            BuyRate = request.BuyRate,
+            SellRate = request.SellRate
+        }, request.UserId);
     }
 }

@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using WebApi.Application.Exceptions;
 using WebApi.Domain.Dto.Currencies;
 using WebApi.Domain.Entities;
 using WebApi.Infrastructure.Data;
@@ -19,7 +18,13 @@ public class CurrencyRepository(OracleDbContext context) : ICurrencyRepository
                 Id = c.Id,
                 Code = c.Code,
                 Name = c.Name,
-                RateToBase = c.RateToBase
+                CountryCode = c.CountryCode,
+                BuyRate = c.BuyRate,
+                SellRate = c.SellRate,
+                CreatedBy = c.CreatedBy,
+                CreatedAt = c.CreatedAt,
+                UpdatedBy = c.UpdatedBy,
+                UpdatedAt = c.UpdatedAt
             })
             .ToListAsync();
     }

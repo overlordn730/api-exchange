@@ -40,16 +40,20 @@ internal class CurrenciesEndpoint : IEndpointDefinition
         return Results.Ok(response);
     }
 
-    [OpenApiOperation("Crear moneda", "Registra una nueva moneda con su cotización respecto al Guaraní.")]
+    [OpenApiOperation("Crear moneda", "Registra una nueva moneda con sus cotizaciones de compra y venta.")]
     internal static async Task<IResult> CreateCurrency(
         IMediator mediator,
+        HttpContext httpContext,
         [FromBody] CreateCurrencyRequest request)
     {
+        var userIdHeader = httpContext.Request.Headers["X-USER-ID"].ToString();
+        request.UserId = int.Parse(userIdHeader);
+
         var response = await mediator.Send(request);
         return Results.Ok(response);
     }
 
-    [OpenApiOperation("Convertir divisas", "Convierte un monto de una moneda a otra usando la cotización registrada.")]
+    [OpenApiOperation("Convertir divisas", "Convierte un monto de una moneda a otra usando las cotizaciones de compra/venta.")]
     internal static async Task<IResult> ConvertCurrency(
         IMediator mediator,
         [FromBody] ConvertCurrencyRequest request)

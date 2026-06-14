@@ -12,5 +12,9 @@ public partial class CurrencyMapper
 
     // Request → Entidad
     [MapperIgnoreTarget(nameof(Currency.Id))]
+    [MapperIgnoreTarget(nameof(Currency.CreatedBy))]
+    [MapperIgnoreTarget(nameof(Currency.CreatedAt))]
+    [MapperIgnoreTarget(nameof(Currency.UpdatedBy))]
+    [MapperIgnoreTarget(nameof(Currency.UpdatedAt))]
     public partial Currency MapToEntity(CurrencyRequest request);
 }

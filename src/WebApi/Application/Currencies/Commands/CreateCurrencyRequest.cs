@@ -7,5 +7,8 @@ public class CreateCurrencyRequest : IRequest<CurrencyResponse>
 {
     public string Code { get; set; } = string.Empty;
     public string Name { get; set; } = string.Empty;
-    public decimal RateToBase { get; set; }
+    public string CountryCode { get; set; } = string.Empty;
+    public decimal BuyRate { get; set; }
+    public decimal SellRate { get; set; }
+    public int UserId { get; set; }
 }

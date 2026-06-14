@@ -22,7 +22,7 @@ public class CurrencyService(
         return await _repository.GetAll();
     }
 
-    public async Task<CurrencyResponse> Create(CurrencyRequest request)
+    public async Task<CurrencyResponse> Create(CurrencyRequest request, int userId)
     {
         _logger.LogInformation("Creando moneda {@request}", request);
 
@@ -31,6 +31,9 @@ public class CurrencyService(
 
         var currency = _mapper.MapToEntity(request);
         currency.Code = request.Code.ToUpper();
+        currency.CountryCode = request.CountryCode.ToUpper();
+        currency.CreatedBy = userId;
+        currency.CreatedAt = DateTime.UtcNow;
 
         var created = await _repository.Create(currency);
         return _mapper.MapToResponse(created);
@@ -46,9 +49,9 @@ public class CurrencyService(
         var to = await _repository.GetByCode(request.ToCurrencyCode)
             ?? throw new ApiBadRequestException(Errors.ERR_CLIENT, Errors.CURRENCY_NOT_FOUND);
 
-        // Fórmula de conversión
-        var amountInBase = request.Amount * from.RateToBase;
-        var convertedAmount = amountInBase / to.RateToBase;
+        // La casa compra FROM al BuyRate, y vende TO al SellRate
+        var amountInBase = request.Amount * from.BuyRate;
+        var convertedAmount = amountInBase / to.SellRate;
 
         return new ConvertResponse
         {
