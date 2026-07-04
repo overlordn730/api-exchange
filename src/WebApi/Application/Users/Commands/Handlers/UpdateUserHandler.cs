@@ -22,7 +22,8 @@ public class UpdateUserHandler(
         {
             Name = request.Name,
             Email = request.Email,
-            Password = request.Password
+            Password = request.Password,
+            IsActive = request.IsActive
         });
     }
 }

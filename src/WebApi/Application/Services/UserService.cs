@@ -49,7 +49,11 @@ public class UserService(IUserRepository repository, UserMapper mapper, ILogger<
             throw new ApiBadRequestException(Errors.ERR_CLIENT, Errors.EMAIL_ALREADY_EXISTS);
 
         var user = _mapper.MapToEntity(request);
-        user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
+        user.IsActive = request.IsActive;
+
+        // Solo actualizar password si se envió una nueva
+        if (!string.IsNullOrEmpty(request.Password))
+            user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
 
         var updated = await _repository.Update(id, user);
         return _mapper.MapToResponse(updated);

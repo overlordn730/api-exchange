@@ -22,7 +22,8 @@ public class CreateUserHandler(
         {
             Name = request.Name,
             Email = request.Email,
-            Password = request.Password
+            Password = request.Password,
+            IsActive = true
         });
     }
 }
